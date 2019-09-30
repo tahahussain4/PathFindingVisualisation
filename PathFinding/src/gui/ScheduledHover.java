@@ -1,6 +1,9 @@
-package AStar;
+package gui;
 
 import java.util.TimerTask;
+
+import Components.Coordinates;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;

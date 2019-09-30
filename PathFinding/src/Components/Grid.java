@@ -2,9 +2,6 @@ package Components;
 
 import java.util.Random;
 
-import AStar.BlockType;
-import AStar.Coordinates;
-
 public class Grid {
 	private Block[][] grid;
 	int lenght;

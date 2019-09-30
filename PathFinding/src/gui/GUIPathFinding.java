@@ -1,4 +1,4 @@
-package AStar;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,6 +17,8 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 
 import Components.Block;
+import Components.BlockType;
+import Components.Coordinates;
 import Components.CustomComponent;
 import Components.Grid;
 import Components.HeaderComponent;
@@ -40,6 +42,7 @@ public class GUIPathFinding extends JFrame {
 		this.grid = grid;
 	   	this.setLayout(new FlowLayout(FlowLayout.CENTER));
 	   	this.setBackground(Color.black);
+	   	
 	   	//grid panel
 	   	gridPanel = new JPanel();
 	   	gridPanel.setLayout(new GridLayout(grid.getLenght(),grid.getWidth()));

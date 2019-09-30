@@ -1,4 +1,4 @@
-package AStar;
+package gui;
 
 import java.util.ArrayList;
 

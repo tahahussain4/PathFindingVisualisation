@@ -1,4 +1,4 @@
-package AStar;
+package Components;
 
 public class Coordinates {
 	int x;

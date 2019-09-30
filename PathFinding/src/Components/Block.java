@@ -1,8 +1,5 @@
 package Components;
 
-import AStar.BlockType;
-import AStar.Coordinates;
-
 public class Block {
 	private Block previousBlock;
 	private Coordinates pos;

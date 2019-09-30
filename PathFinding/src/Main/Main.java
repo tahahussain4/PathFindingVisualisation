@@ -17,15 +17,16 @@ import java.util.Scanner;
 import java.util.Timer;
 
 import AStar.AStar;
-import AStar.AnimationThread;
-import AStar.BlockType;
-import AStar.Coordinates;
-import AStar.GUIPathFinding;
-import AStar.MouseEventQueue;
-import AStar.ScheduledHover;
+import AStar.AStarReturn;
 import Components.Block;
 import Components.BlockComparator;
+import Components.BlockType;
+import Components.Coordinates;
 import Components.Grid;
+import gui.AnimationThread;
+import gui.GUIPathFinding;
+import gui.MouseEventQueue;
+import gui.ScheduledHover;
 
 public class Main {
 	Scanner scanner = new Scanner(System.in);
@@ -49,35 +50,43 @@ public class Main {
 		
 		gui.renderGridFirst(grid);
 		
-		AnimationThread animator = new AnimationThread(gui);
-		time.schedule(animator,0, 100);
+//		AnimationThread animator = new AnimationThread(gui);
+//		time.schedule(animator,0, 100);
 		
-		ScheduledHover hoverThread = new ScheduledHover(gui);
-		time.schedule(hoverThread, 0, 5);
+//		ScheduledHover hoverThread = new ScheduledHover(gui);
+//		time.schedule(hoverThread, 0, 5);
 		
-		Queue<Coordinates> mouseQueue = MouseEventQueue.getMouseQueue();
+//		Queue<Coordinates> mouseQueue = MouseEventQueue.getMouseQueue();
 		
 		//start
-		gui.updateHeader("Select a Starting point");
-		Coordinates start = getUserSelectedCoords(grid);
- 		gui.renderBlock(start.getX(), start.getY(), "selected", null, "");
+		while(true) {
+			gui.updateHeader("Select a Starting point");
+			
+			Coordinates start = getUserSelectedCoords(grid);
+	 		gui.renderBlock(start.getX(), start.getY(), "selected", null, "");
+	
+	 		//getting end coordiantes
+	 		gui.updateHeader("Select an ending point");
+	 		Coordinates end = getUserSelectedCoords(grid);
+	 		gui.renderBlock(end.getX(), end.getY(), "path", null, "");
+	 		
+	 		//sotp the hovering action
+	// 		hoverThread.cancel();
+			
+	 		//running algorithm
+			double timeStart = System.nanoTime();
+		
+			AStarReturn displayReturn = aStar.findPath(grid, start,end,goDiagonal);
+			gui.displayFinalPath(grid, end,displayReturn.getSelected(),displayReturn.getExplored());
+			
+			double timeEnd = System.nanoTime();
+			
+			System.out.println("time it took for the algorithnm to run bro: " + (timeEnd/1000000.0 - timeStart/1000000.0 - aStar.getSleepTimesMilli()) + "ms");
+			System.out.println("total sleep time : " + aStar.getSleepTimesMilli() + " ms");
+			Main.renderConsoleGrid(grid, end,putDataInFile);
+		}
+		
 
- 		//getting end coordiantes
- 		gui.updateHeader("Select an ending point");
- 		Coordinates end = getUserSelectedCoords(grid);
- 		gui.renderBlock(end.getX(), end.getY(), "path", null, "");
- 		
- 		//sotp the hovering action
- 		hoverThread.cancel();
-		
- 		//running algorithm
-		double timeStart = System.nanoTime();
-		aStar.findPath(grid, start,end,goDiagonal);
-		double timeEnd = System.nanoTime();
-		
-		System.out.println("time it took for the algorithnm to run bro: " + (timeEnd/1000000.0 - timeStart/1000000.0 - aStar.getSleepTimesMilli()) + "ms");
-		System.out.println("total sleep time : " + aStar.getSleepTimesMilli() + " ms");
-		Main.renderConsoleGrid(grid, end,putDataInFile);
 	}
 	
 	public static Coordinates getUserSelectedCoords(Grid grid){

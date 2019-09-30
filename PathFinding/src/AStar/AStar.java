@@ -13,12 +13,17 @@ import java.util.PriorityQueue;
 
 */
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicStampedReference;
 
 //import org.apache.tomcat.jni.Time;
 
 import Components.Block;
 import Components.BlockComparator;
+import Components.BlockType;
+import Components.Coordinates;
 import Components.Grid;
+import gui.GUIPathFinding;
+import gui.SliderState;
 
 public class AStar {
 	GUIPathFinding gui;
@@ -29,14 +34,14 @@ public class AStar {
 		this.gui = gui;
 	}
 
-	public void findPath(Grid grid,Coordinates start,Coordinates end,boolean diagonal){
+	public AStarReturn findPath(Grid grid,Coordinates start,Coordinates end,boolean diagonal){
 		ArrayList<Block> selected = new ArrayList<Block>();
 		PriorityQueue<Block> explored = new PriorityQueue<Block>(6, new BlockComparator());
 		//add first node to explored
 		grid.getGrid()[start.getX()][start.getY()].setStartCost(0);
 		explored.add(grid.getGrid()[start.getX()][start.getY()]);
 		
-		gui.display(grid, end,selected,explored);
+		
 		
 		while(true){
 			
@@ -55,7 +60,9 @@ public class AStar {
 				break;
 			}
 		}
-		gui.displayFinalPath(grid, end,selected,explored);
+		
+		return new AStarReturn(selected,explored);
+		
 	}
 	
 	public void select(Block currentBlock,Grid grid,Coordinates start,Coordinates end,ArrayList<Block> selected, PriorityQueue<Block> explored,boolean diagonal){

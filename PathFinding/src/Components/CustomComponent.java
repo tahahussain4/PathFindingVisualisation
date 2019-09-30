@@ -22,6 +22,7 @@ public class CustomComponent extends JComponent  implements MouseListener{
     private int gridX;
     private int gridY;
     private Color color;
+    private Color originalColor;
     private String text;
     private int blockWidth;
     JLabel label;
@@ -41,6 +42,11 @@ public class CustomComponent extends JComponent  implements MouseListener{
         Graphics2D g2  = (Graphics2D) g;
         
         g2.setColor(color);
+        
+        if(originalColor == null) {
+        		originalColor = color;
+        }
+        
         g2.drawRect(0, 0, blockWidth, blockWidth);
         g2.fillRect(0, 0, blockWidth, blockWidth);
 //        label.setText(this.getText());
@@ -141,6 +147,14 @@ public class CustomComponent extends JComponent  implements MouseListener{
 
 	public void setGridY(int gridY) {
 		this.gridY = gridY;
+	}
+
+	public Color getOriginalColor() {
+		return originalColor;
+	}
+
+	public void setOriginalColor(Color originalColor) {
+		this.originalColor = originalColor;
 	}
 	
 	

@@ -1,9 +1,11 @@
-package AStar;
+package gui;
 
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.SynchronousQueue;
+
+import Components.Coordinates;
 
 public class MouseEventQueue {
 	private static Queue<Coordinates> mouseClicks;

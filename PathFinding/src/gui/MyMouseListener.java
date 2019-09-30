@@ -1,11 +1,11 @@
-package AStar;
+package gui;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Queue;
 
-
+import Components.Coordinates;
 import Components.CustomComponent;
 
 class MyMouseListener extends MouseAdapter {
@@ -30,14 +30,12 @@ class MyMouseListener extends MouseAdapter {
        xPos = source.getGridX();
        yPos = source.getGridY();
        
-	   if(!gui.getGrid().isObstacle(xPos, yPos)){
+	   if(!gui.getGrid().isObstacle(xPos, yPos)) {
 		   ScheduledHover.erasePreviousState();
 	       Queue<Coordinates> queue =  MouseEventQueue.getMouseQueue();
 	       System.out.println("added to mouse queue");
 	       queue.add(new Coordinates(xPos, yPos));
 	   }
-	   
-
 	}
 
 	@Override
@@ -47,7 +45,7 @@ class MyMouseListener extends MouseAdapter {
        CustomComponent source = (CustomComponent)e.getSource();
        xPos = source.getGridX();
        yPos = source.getGridY();
-	   MouseEventQueue.addToHover(new Coordinates(xPos, yPos));
+       gui.renderBlock(xPos, yPos, "hover", null, "");
 	}
 
 	@Override
@@ -56,6 +54,15 @@ class MyMouseListener extends MouseAdapter {
 		super.mouseReleased(e);
 	}
 
+	@Override
+	public void mouseExited(MouseEvent e) {
+	       CustomComponent source = (CustomComponent)e.getSource();
+	       xPos = source.getGridX();
+	       yPos = source.getGridY();
+	       System.out.println("");
+	       gui.renderBlock(xPos, yPos, source.getOriginalColor(),"");
+	}
+	
 	public Coordinates getCoordAndWipe(){
 		Coordinates coord  = new Coordinates(xPos,yPos);
 		xPos = -1;
